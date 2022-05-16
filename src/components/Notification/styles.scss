@@ -1,0 +1,92 @@
+@keyframes toaster {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.notification-box {
+    font-size: 14px;
+    box-sizing: border-box;
+    position: fixed;
+    width: 550px;
+    height: 60px;
+
+    .box-wrapper {
+        transition: 0.3s ease;
+        position: relative;
+        pointer-events: auto;
+        overflow: hidden;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding: 10px;
+        max-height: 50px;
+        border-radius: 3px 3px 3px 3px;
+        box-shadow: 0 0 10px #999;
+        color: #000;
+        opacity: 0.9;
+        background-position: 15px;
+        background-repeat: no-repeat;
+        &:hover {
+            box-shadow: 0 0 12px #fff;
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .image-wrapper {
+            float: left;
+            margin-right: 15px;
+            width: 5%;
+            img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+        .type-message-wrapper {
+            display: flex;
+            align-items: center;
+            width: 85%;
+            .type-content {
+                font-weight: 700;
+                font-size: 15px;
+                text-align: left;
+                margin: 0;
+                margin-right: 10px;
+            }
+
+            .message-content {
+                margin: 0;
+                font-size: 14px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+        .btn-wrapper {
+            width: 5%;
+            float: right;
+            font-weight: 700;
+            color: #fff;
+            outline: none;
+            border: none;
+            text-shadow: 0 1px 0 #fff;
+            padding: 0;
+            cursor: pointer;
+            background: 0 0;
+            border: 0;
+            img {
+                width: 15px;
+            }
+        }
+    }
+}
+
+.notification-pos-wrap {
+    top: 12px;
+    right: 12px;
+    transition: transform 0.6s ease-in-out;
+    animation: toaster 0.7s;
+}
