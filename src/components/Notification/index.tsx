@@ -7,17 +7,20 @@ import CloseIcon from "../../assets/close.svg";
 type NotificationToasterProps = {
   notification: INotification;
   deleteNotification: (e: string) => void;
+  position: string;
 };
 
 type Ttoaster = {
   type: string;
   color: string;
+  textColor: string;
   icon: any;
-  message: string;
+  message?: string;
 };
 export const NotificationToaster: React.FC<NotificationToasterProps> = ({
   notification,
   deleteNotification,
+  position,
 }) => {
   const [toast, setToaster] = useState<Ttoaster | null>(null);
 
@@ -33,7 +36,11 @@ export const NotificationToaster: React.FC<NotificationToasterProps> = ({
     }
 
     if (pieces.includes("LIMITED") && pieces.includes("EDITION")) {
-      message = message.toUpperCase();
+      const indexOfLimited = pieces.findIndex((x: string) => x === "LIMITED");
+      const indexOfEdition = pieces.findIndex((x: string) => x === "EDITION");
+      if (indexOfLimited === indexOfEdition - 1) {
+        message = message.toUpperCase();
+      }
     }
     return message;
   };
@@ -49,16 +56,16 @@ export const NotificationToaster: React.FC<NotificationToasterProps> = ({
   return (
     <>
       {toast ? (
-        <div className="notification-box notification-pos-wrap">
+        <div className={`notification-box notification-pos-wrap ${position}`}>
           <div
-            className="box-wrapper notification-pos-wrap"
-            style={{ backgroundColor: toast.color }}
+            className={`box-wrapper notification-pos-wrap ${position}`}
+            style={{ backgroundColor: toast.color, color: toast.textColor }}
           >
             <div className="image-wrapper">
               <img src={toast.icon} alt="" />
+              <p className="type-content">{toast.type} :</p>
             </div>
             <div className="type-message-wrapper">
-              <p className="type-content">{toast.type} :</p>
               <p className="message-content">{toast.message}</p>
             </div>
             <button

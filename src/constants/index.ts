@@ -39,21 +39,25 @@ export const parseAxiosError = (error: AxiosError): IErrorResponse => {
 export const NotificationCSS = [
   {
     type: "Success",
+    textColor: "#119811",
     color: "rgb(185 232 185)",
     icon: successIcon,
   },
   {
     type: "Error",
+    textColor: "#af0000",
     color: "rgb(239 134 131)",
     icon: errorIcon,
   },
   {
     type: "Info",
+    textColor: "#066680",
     color: "rgb(134 216 240)",
     icon: infoIcon,
   },
   {
     type: "Warning",
+    textColor: "#7e6f00",
     color: "rgb(237 221 103)",
     icon: warningIcon,
   },

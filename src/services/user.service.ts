@@ -8,9 +8,9 @@ import {
 import { BaseService } from "./base.service";
 
 export class UserService extends BaseService {
-  public async adduser(): Promise<ISuccessResponse | IErrorResponse> {
+  public async addUser(): Promise<ISuccessResponse | IErrorResponse> {
     try {
-      const id = uuidv4();
+      const id: string = uuidv4();
       const { data } = await this.httpClient.post("/user/addUser", { id });
       sessionStorage.setItem("userId", data.data);
       return data;

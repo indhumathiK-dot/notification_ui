@@ -6,9 +6,9 @@ import { HomePage } from "./pages/HomePage";
 const App: React.FC = () => {
   const userService: UserService = new UserService();
 
-  const addUser = async () => {
+  const addUser = async (): Promise<void> => {
     try {
-      await userService.adduser();
+      await userService.addUser();
     } catch (error) {
       console.log(error);
     }

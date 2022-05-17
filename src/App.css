@@ -1,7 +1,11 @@
 .App {
   text-align: center;
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:50px;
 }
 
 .timer-img {
-  width: 250px;
+  width: 50px;
+  margin: 30px;
 }

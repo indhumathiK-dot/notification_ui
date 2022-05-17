@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable no-octal */
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
@@ -14,6 +15,9 @@ import SocketIcon from "../../assets/socket.svg";
 
 import "./styles.scss";
 
+type TPostition = { value: string; label: string; default: boolean };
+type TTechnologies = { url: string; title: string; icon: any };
+
 const socket = socketIOClient(BASE_URL);
 
 window.onbeforeunload = () => {
@@ -26,8 +30,16 @@ const technologies = [
   { title: "Socket IO", icon: SocketIcon, url: "https://socket.io/docs/v4/" },
 ];
 
+const positionList = [
+  { value: "top-right", label: "Top Right", default: true },
+  { value: "bottom-right", label: "Bottom Right", default: false },
+  { value: "bottom-left", label: "Bottom Left", default: false },
+  { value: "top-left", label: "Top Left", default: false },
+];
+
 export const HomePage: React.FC = () => {
   const [message, setMessage] = useState<INotification | null>(null);
+  const [position, setPosition] = useState<string>("top-right");
 
   function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -45,12 +57,14 @@ export const HomePage: React.FC = () => {
     setInterval(() => {
       socket.emit("messages", { id: sessionStorage.getItem("userId") });
     }, randomIntFromInterval(5, 10) * 1000);
+
     socket.on("return", (data: INotification) => {
       setMessage(data);
       setTimeout(() => {
         setMessage(null);
       }, randomIntFromInterval(1, 4) * 1000);
     });
+
     return () => {
       socket.emit("close", sessionStorage.getItem("userId"));
     };
@@ -64,11 +78,32 @@ export const HomePage: React.FC = () => {
         <p>Get Notifcation between 5-10 seconds </p>
       </>
 
+      <h4>Toaster Position</h4>
+      <div className="postion-wrapper">
+        <div>
+          {positionList.map((pos: TPostition) => {
+            return (
+              <p>
+                <input
+                  type="radio"
+                  value={pos.value}
+                  name="position"
+                  defaultChecked={pos.default}
+                  onChange={(e) => setPosition(e.target.value)}
+                />{" "}
+                {pos.label}
+                <br />
+              </p>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="tech-wrapper">
         <h4>Technologies Used</h4>
 
         <div className="stack-wrapper">
-          {technologies.map((tech) => {
+          {technologies.map((tech: TTechnologies) => {
             return <Card url={tech.url} title={tech.title} icon={tech.icon} />;
           })}
         </div>
@@ -78,6 +113,7 @@ export const HomePage: React.FC = () => {
         <NotificationToaster
           notification={message}
           deleteNotification={(data: string) => removeMessage(data)}
+          position={position}
         />
       ) : (
         <></>

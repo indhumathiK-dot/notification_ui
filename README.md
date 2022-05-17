@@ -1,4 +1,4 @@
-# Notification UI
+# Custom Notification
 
 Scope of work: Creating web application for notification.
 
